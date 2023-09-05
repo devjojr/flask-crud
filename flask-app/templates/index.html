@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="grid">
+      <h1>Todos</h1>
+      <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+      </nav>
+    </header>
+    <main class="grid">
+      <h1>My Todos</h1>
+
+      <div class="create-card">
+        <h2>Create Todo</h2>
+        <form action="{{ url_for('create_todo') }}" method="POST">
+          <div class="form-group">
+            <label class="label" for="title">Title:</label>
+            <input
+              class="input-field"
+              type="text"
+              id="title"
+              name="title"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="label" for="description">Description:</label>
+            <input
+              class="input-field"
+              type="text"
+              id="description"
+              name="description"
+              required
+            />
+          </div>
+          <input class="submit-btn" type="submit" value="Create Todo" />
+        </form>
+      </div>
+
+      <div class="todo-card">
+        <h2>Todos</h2>
+        <div>
+          {% for todo in todos %}
+          <p>
+            <span id="update-btn"
+              ><a href="{{ url_for('update_todo', todo_id=todo.id) }}"
+                ><i class="fas fa-edit"></i></a
+            ></span>
+            <span id="delete-btn"
+              ><a href="{{ url_for('delete_todo', todo_id=todo.id) }}"
+                ><i class="fas fa-trash-alt"></i></a
+            ></span>
+
+            {{ todo.title }} - {{ todo.description }}
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
